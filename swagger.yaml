@@ -1,0 +1,705 @@
+swagger: '2.0'
+host: www.cbioportal.org
+basePath: /api
+
+schemes:
+- http
+
+consumes:
+- application/json
+
+produces:
+- application/json
+
+info:
+  version: 0.0.1
+  title: cBioPortal API
+  description: The cBioPortal for Cancer Genomics provides APIs for large-scale cancer genomics data sets.
+
+paths:
+
+  /cancertypes:
+    get:
+      description: Get all cancer types. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/sizeParam'
+      - $ref: '#/parameters/pageParam'
+      responses:
+        200:
+          $ref: '#/responses/cancerTypesResponse'
+  
+  /cancertypes/{cancerTypeId}:
+    get:
+      description: Get a cancer type. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/cancerTypeIdPathParam'
+      responses:
+        200:
+          $ref: '#/responses/cancerTypeResponse'
+          
+  /cancertypes/search:
+    post:
+      description: Search cancer types by list of IDs. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/cancerTypeIdsBodyParam'
+      responses:
+        200:
+          $ref: '#/responses/cancerTypesResponse'
+  
+  /cancertypes/query:
+    post:
+      description: Query cancer types by example. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/sizeParam'
+      - $ref: '#/parameters/pageParam'
+      - $ref: '#/parameters/cancerTypeBodyParam'
+      responses:
+        200:
+          $ref: '#/responses/cancerTypesResponse'
+
+  /studies:
+    get:
+      description: Get all studies. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/sizeParam'
+      - $ref: '#/parameters/pageParam'
+      responses:
+        200:
+          $ref: '#/responses/studiesResponse'
+  
+  /studies/{studyId}:
+    get:
+      description: Get a study. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/studyIdPathParam'
+      responses:
+        200:
+          $ref: '#/responses/studyResponse'
+  
+  /studies/search:
+    post:
+      description: Search studies by list of IDs. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/studyIdsBodyParam'
+      responses:
+        200:
+          $ref: '#/responses/studiesResponse'
+            
+  /studies/query:
+    post:
+      description: Query studies by example. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/sizeParam'
+      - $ref: '#/parameters/pageParam'
+      - $ref: '#/parameters/studyBodyParam'
+      responses:
+        200:
+          $ref: '#/responses/studiesResponse'
+    
+  /studies/{studyId}/patients:
+    get:
+      description: Get all patients in a study. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/sizeParam'
+      - $ref: '#/parameters/pageParam'
+      - $ref: '#/parameters/studyIdPathParam'
+      responses:
+        200:
+          $ref: '#/responses/patientsResponse'
+            
+  /studies/{studyId}/patients/{patientId}:
+    get:
+      description: Get a patient in a study. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/studyIdPathParam'
+      - $ref: '#/parameters/patientIdPathParam'
+      responses:
+        200:
+          $ref: '#/responses/patientResponse'
+            
+  /patients/search:
+    post:
+      description: Search patients by list of study ID and patient ID couples. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/patientIdentifiersBodyParam'
+      responses:
+        200:
+          $ref: '#/responses/patientsResponse'
+            
+  /patients/query:
+    post:
+      description: Query patients by example. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/sizeParam'
+      - $ref: '#/parameters/pageParam'
+      - $ref: '#/parameters/patientBodyParam'
+      responses:
+        200:
+          $ref: '#/responses/patientsResponse'
+          
+  /studies/{studyId}/patients/{patientId}/samples:
+    get:
+      description: Get all samples of a patient in a study. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/sizeParam'
+      - $ref: '#/parameters/pageParam'
+      - $ref: '#/parameters/studyIdPathParam'
+      - $ref: '#/parameters/patientIdPathParam'
+      responses:
+        200:
+          $ref: '#/responses/samplesResponse'
+          
+  /studies/{studyId}/samples/{sampleId}:
+    get:
+      description: Get a sample in a study. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/studyIdPathParam'
+      - $ref: '#/parameters/sampleIdPathParam'
+      responses:
+        200:
+          $ref: '#/responses/sampleResponse'
+          
+  /samples/search:
+    post:
+      description: Search samples by list of study ID and sample ID couples. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/sampleIdentifiersBodyParam'
+      responses:
+        200:
+          $ref: '#/responses/samplesResponse'
+            
+  /samples/query:
+    post:
+      description: Query samples by example. **(🚫 Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/projectionParam'
+      - $ref: '#/parameters/sizeParam'
+      - $ref: '#/parameters/pageParam'
+      - $ref: '#/parameters/sampleBodyParam'
+      responses:
+        200:
+          $ref: '#/responses/samplesResponse'
+          
+parameters:
+
+  projectionParam:
+    name: projection
+    in: query
+    description: |
+      An optional parameter to specify the type of projection of the response.
+      
+      - ID **_Returns only id field(s) of the objects_**
+      
+      - SUMMARY **_Returns only primitive types in the objects. No nested properties or collections_**
+      
+      - ALL **_Returns all properties including nested properties and collections_**
+    required: false
+    type: string
+    enum:
+    - ID
+    - SUMMARY
+    - ALL
+    default: SUMMARY
+    
+  pageParam:
+    name: page
+    in: query
+    description: |
+      An optional parameter to specify the page number of the paginated result.
+      **_0_** means the first page.
+    required: false
+    type: integer
+    default: 0
+    
+  sizeParam:
+    name: size
+    in: query
+    description: |
+      An optional parameter to specify the page size of the paginated result.
+      **_0_** can be used if only the metadata in the response headers is wanted.
+    required: false
+    type: integer
+    default: 100
+
+  cancerTypeIdPathParam:
+    name: cancerTypeId
+    in: path
+    description: ID of the cancer type.
+    required: true
+    type: string
+
+  cancerTypeIdsBodyParam:
+    name: cancerTypeIds
+    in: body
+    description: List of IDs of cancer types.
+    required: true
+    schema:
+      type: array
+      items:
+        type: string
+      example:
+      - unec
+      - nmzl
+  
+  cancerTypeBodyParam:
+    name: cancerType
+    in: body
+    description: Example cancer type to be used in query.
+    required: true
+    schema:
+      $ref: '#/definitions/CancerType'
+
+  studyIdPathParam:
+    name: studyId
+    in: path
+    description: ID of the study.
+    required: true
+    type: string
+    
+  studyIdsBodyParam:
+    name: studyIds
+    in: body
+    description: List of IDs of studies.
+    required: true
+    schema:
+      type: array
+      items:
+        type: string
+      example:
+      - blca_tcga
+      - brca_tcga
+  
+  studyBodyParam:
+    name: study
+    in: body
+    description: Example study to be used in query.
+    required: true
+    schema:
+      $ref: '#/definitions/Study'
+        
+  patientIdPathParam:
+    name: patientId
+    in: path
+    description: ID of the patient.
+    required: true
+    type: string
+        
+  patientIdentifiersBodyParam:
+    name: patientIdentifiers
+    in: body
+    description: List of IDs of patients.
+    required: true
+    schema:
+      $ref: '#/definitions/PatientIdentifiers'
+      
+  patientBodyParam:
+    name: patient
+    in: body
+    description: Example patient to be used in query.
+    required: true
+    schema:
+      $ref: "#/definitions/Patient"
+      
+  sampleIdPathParam:
+    name: sampleId
+    in: path
+    description: ID of the sample.
+    required: true
+    type: string
+    
+  sampleIdentifiersBodyParam:
+    name: sampleIdentifiers
+    in: body
+    description: List of IDs of samples.
+    required: true
+    schema:
+      $ref: '#/definitions/SampleIdentifiers'
+      
+  sampleBodyParam:
+    name: sample
+    in: body
+    description: Example sample to be used in query.
+    required: true
+    schema:
+      $ref: "#/definitions/Sample"
+      
+responses:
+  
+  cancerTypeResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/CancerType'
+      
+  cancerTypesResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/CancerTypes'
+    headers:
+      X-Total-Count:
+        type: integer
+      
+  studyResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/Study'
+      
+  studiesResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/Studies'
+    headers:
+      X-Total-Count:
+        type: integer
+      
+  patientResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/Patient'
+      
+  patientsResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/Patients'
+    headers:
+      X-Total-Count:
+        type: integer
+        
+  sampleResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/Sample'
+      
+  samplesResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/Samples'
+    headers:
+      X-Total-Count:
+        type: integer
+    
+definitions:
+
+  CancerType:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      keywords:
+        type: string
+      color:
+        type: string
+      shortName:
+        type: string
+      parent:
+        type: string
+    example:
+      id: mychs
+      name: Myxoid Chondrosarcoma
+      keywords: myxoid chondrosarcoma
+      color: White
+      shortName: MYCHS
+      parent: chs
+  
+  CancerTypes:
+    type: array
+    items:
+      $ref: '#/definitions/CancerType'
+    example:
+    - id: unec
+      name: Uterine Neuroendocrine Carcinoma
+      keywords: uterine neuroendocrine carcinoma
+      color: PeachPuff
+      shortName: UNEC
+      parent: ucec
+    - id: nmzl
+      name: Nodal Marginal Zone Lymphoma
+      keywords: nodal marginal zone lymphoma
+      color: LimeGreen
+      shortName: NMZL
+      parent: bcl
+        
+  Study:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      shortName:
+        type: string
+      description:
+        type: string
+      public:
+        type: boolean
+      pmid:
+        type: string
+      citation:
+        type: string
+      groups:
+        type: string
+      status:
+        type: integer
+      importDate:
+        type: string
+        format: date-time
+      cancerTypeId:
+        type: string
+      cancerType:
+        $ref: '#/definitions/CancerType'
+    example:
+      id: acc_tcga
+      name: Adrenocortical Carcinoma (TCGA, Provisional)
+      shortName: ACC (TCGA)
+      description: TCGA Adrenocortical Carcinoma; raw data at the <A HREF="https://tcga-data.nci.nih.gov/">NCI</A>.
+      public: true
+      pmid: 22634756
+      citation: Fujimoto et al. Nature Genetics 2012.
+      groups: PUBLIC
+      status: 1
+      importDate: 2015-12-21 09:32:09
+      cancerTypeId: acc
+  
+  Studies:
+    type: array
+    items:
+      $ref: '#/definitions/Study'
+    example:
+    - id: blca_tcga
+      name: Bladder Urothelial Carcinoma (TCGA, Provisional)
+      shortName: Bladder (TCGA)
+      description: TCGA Bladder Urothelial Carcinoma; raw data at the <A HREF="https://tcga-data.nci.nih.gov/">NCI</A>.
+      public: true
+      pmid: 22820256
+      citation: Pugh et al. Nature 2012.
+      groups: PUBLIC
+      status: 1
+      importDate: 2015-12-21 10:27:04
+      cancerTypeId: blca
+    - id: brca_tcga
+      name: Breast Invasive Carcinoma (TCGA, Provisional)
+      shortName: Breast (TCGA)
+      description: TCGA Breast Invasive Carcinoma; raw data at the <A HREF="https://tcga-data.nci.nih.gov/">NCI</A>.
+      public: true
+      pmid: 22722839
+      citation: Grasso et al. Nature 2012.
+      groups: PUBLIC
+      status: 1
+      importDate: 2015-12-21 12:41:26
+      cancerTypeId: brca
+        
+  Patient:
+
+    type: object
+    properties:
+      id:
+        type: string
+      study:
+        $ref: '#/definitions/Study'
+      clinicalAttributes:
+        $ref: '#/definitions/ClinicalAttributes'
+    example:
+      id: TCGA-PK-A5HC
+      clinicalAttributes:
+      - id: PROSPECTIVE_COLLECTION
+        name: Tissue Prospective Collection Indicator
+        description: Text indicator for the time frame of tissue procurement, indicating that the tissue was procured in parallel to the project.
+        priority: 1
+        value: YES
+      - id: RETROSPECTIVE_COLLECTION
+        name: Tissue Retrospective Collection Indicator
+        description: Text indicator for the time frame of tissue procurement, indicating that the tissue was obtained and stored prior to the initiation of the project.
+        priority: 1
+        value: NO
+ 
+  Patients:
+    type: array
+    items:
+      $ref: '#/definitions/Patient'
+    example:
+    - id: TCGA-PK-A5HC
+      clinicalAttributes:
+      - id: PROSPECTIVE_COLLECTION
+        name: Tissue Prospective Collection Indicator
+        description: Text indicator for the time frame of tissue procurement, indicating that the tissue was procured in parallel to the project.
+        priority: 1
+        value: YES
+      - id: RETROSPECTIVE_COLLECTION
+        name: Tissue Retrospective Collection Indicator
+        description: Text indicator for the time frame of tissue procurement, indicating that the tissue was obtained and stored prior to the initiation of the project.
+        priority: 1
+        value: NO
+    - id: TCGA-ZF-AA5P
+      clinicalAttributes:
+      - id: GENDER
+        name: Person Gender
+        description: Patient gender.
+        priority: 1
+        value: FEMALE
+      - id: RACE
+        name: Race Category
+        description: The text for reporting information about race.
+        priority: 1
+        value: ASIAN
+  
+  PatientIdentifier:
+    type: object
+    properties:
+      id:
+        type: string
+      studyId:
+        type: string
+    example:
+      id: TCGA-OR-A5J1
+      studyId: acc_tcga
+   
+  PatientIdentifiers:
+    type: array
+    items:
+      $ref: '#/definitions/PatientIdentifier'
+    example:
+    - id: TCGA-PK-A5HC
+      studyId: acc_tcga
+    - id: TCGA-ZF-AA5P
+      studyId: blca_tcga
+    
+  ClinicalAttribute:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      priority:
+        type: integer
+      value:
+        type: string
+    example:
+      id: PATIENT_ID
+      name: Patient Identifier
+      description: Identifier to uniquely specify a patient.
+      priority: 1
+      value: 12345
+      
+  ClinicalAttributes:
+    type: array
+    items:
+      $ref: '#/definitions/ClinicalAttribute'
+    example:
+    - id: OTHER_PATIENT_ID
+      name: Other Patient ID
+      description: Legacy DMP patient identifier (DMPnnnn)
+      priority: 1
+      value: 54321
+    - id: FORM_COMPLETION_DATE
+      name: Form completion date
+      description: Form completion date
+      priority: 1
+      value: 2015-12-21 09:32:09
+      
+  Sample:
+    type: object
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+        enum:
+        - Primary Solid Tumor
+        - Recurrent Solid Tumor
+        - Primary Blood Tumor
+        - Recurrent Blood Tumor
+        - Metastatic
+        - Blood Derived Normal
+        - Solid Tissues Normal
+      cancerTypeId:
+        type: string
+      clinicalAttributes:
+        $ref: '#/definitions/ClinicalAttributes'
+      patient:
+        $ref: '#/definitions/Patient'
+    example:
+      id: TCGA-PK-A5HC-01
+      type: Primary Solid Tumor
+      cancerTypeId: acc
+      clinicalAttributes:
+      - id: OTHER_SAMPLE_ID
+        name: Other Sample ID
+        description: Legacy DMP sample identifier (DMPnnnn)
+        priority: 1
+        value: 5C631CE8-F96A-4C35-A459-556FC4AB21E1
+      - id: DAYS_TO_COLLECTION
+        name: Days to Sample Collection.
+        description: Days to sample collection.
+        priority: 1
+        value: 276
+   
+  Samples:
+    type: array
+    items:
+      $ref: '#/definitions/Sample'
+    example:
+    - id: TCGA-P6-A5OH-01
+      type: Recurrent Solid Tumor
+      cancerTypeId: acc
+      clinicalAttributes:
+      - id: OTHER_SAMPLE_ID
+        name: Other Sample ID
+        description: Legacy DMP sample identifier (DMPnnnn)
+        priority: 1
+        value: 5C631CE8-F96A-4C35-A459-556FC4AB21E1
+      - id: DAYS_TO_COLLECTION
+        name: Days to Sample Collection.
+        description: Days to sample collection.
+        priority: 1
+        value: 276
+    - id: TCGA-OR-A5LI-01
+      type: Primary Solid Tumor
+      cancerTypeId: blca
+      clinicalAttributes:
+      - id: IS_FFPE
+        name: Is FFPE
+        description: If the sample is from FFPE
+        priority: 1
+        value: NO
+      - id: OCT_EMBEDDED
+        name: Oct embedded
+        description: Oct embedded
+        priority: 1
+        value: false
+        
+  SampleIdentifier:
+    type: object
+    properties:
+      id:
+        type: string
+      studyId:
+        type: string
+    example:
+      id: TCGA-PK-A5HC-01
+      studyId: acc_tcga
+   
+  SampleIdentifiers:
+    type: array
+    items:
+      $ref: '#/definitions/SampleIdentifier'
+    example:
+    - id: TCGA-P6-A5OH-01
+      studyId: acc_tcga
+    - id: TCGA-OR-A5LI-01
+      studyId: blca_tcga
+        
