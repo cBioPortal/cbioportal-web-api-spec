@@ -38,9 +38,9 @@ paths:
         200:
           $ref: '#/responses/cancerTypeResponse'
           
-  /cancertypes/search:
+  /cancertypes/fetch:
     post:
-      description: Search cancer types by list of IDs. **(🚫 Not Implemented Yet)**
+      description: Fetch cancer types by list of IDs. **(🚫 Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/cancerTypeIdsBodyParam'
@@ -80,9 +80,9 @@ paths:
         200:
           $ref: '#/responses/studyResponse'
   
-  /studies/search:
+  /studies/fetch:
     post:
-      description: Search studies by list of IDs. **(🚫 Not Implemented Yet)**
+      description: Fetch studies by list of IDs. **(🚫 Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/studyIdsBodyParam'
@@ -124,9 +124,9 @@ paths:
         200:
           $ref: '#/responses/patientResponse'
             
-  /patients/search:
+  /patients/fetch:
     post:
-      description: Search patients by list of study ID and patient ID couples. **(🚫 Not Implemented Yet)**
+      description: Fetch patients by list of study ID and patient ID couples. **(🚫 Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/patientIdentifiersBodyParam'
@@ -169,9 +169,9 @@ paths:
         200:
           $ref: '#/responses/sampleResponse'
           
-  /samples/search:
+  /samples/fetch:
     post:
-      description: Search samples by list of study ID and sample ID couples. **(🚫 Not Implemented Yet)**
+      description: Fetch samples by list of study ID and sample ID couples. **(🚫 Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sampleIdentifiersBodyParam'
