@@ -20,7 +20,7 @@ paths:
 
   /cancertypes:
     get:
-      description: Get all cancer types. **(🚫 Not Implemented Yet)**
+      description: Get all cancer types. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sizeParam'
@@ -31,7 +31,7 @@ paths:
   
   /cancertypes/{cancerTypeId}:
     get:
-      description: Get a cancer type. **(🚫 Not Implemented Yet)**
+      description: Get a cancer type. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/cancerTypeIdPathParam'
       responses:
@@ -40,7 +40,7 @@ paths:
           
   /cancertypes/fetch:
     post:
-      description: Fetch cancer types by list of IDs. **(🚫 Not Implemented Yet)**
+      description: Fetch cancer types by list of IDs. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/cancerTypeIdsBodyParam'
@@ -50,7 +50,7 @@ paths:
   
   /cancertypes/query:
     post:
-      description: Query cancer types by example. **(🚫 Not Implemented Yet)**
+      description: Query cancer types by example. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sizeParam'
@@ -62,7 +62,7 @@ paths:
 
   /studies:
     get:
-      description: Get all studies. **(🚫 Not Implemented Yet)**
+      description: Get all studies. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sizeParam'
@@ -73,7 +73,7 @@ paths:
   
   /studies/{studyId}:
     get:
-      description: Get a study. **(🚫 Not Implemented Yet)**
+      description: Get a study. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/studyIdPathParam'
       responses:
@@ -82,7 +82,7 @@ paths:
   
   /studies/fetch:
     post:
-      description: Fetch studies by list of IDs. **(🚫 Not Implemented Yet)**
+      description: Fetch studies by list of IDs. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/studyIdsBodyParam'
@@ -92,7 +92,7 @@ paths:
             
   /studies/query:
     post:
-      description: Query studies by example. **(🚫 Not Implemented Yet)**
+      description: Query studies by example. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sizeParam'
@@ -104,7 +104,7 @@ paths:
     
   /studies/{studyId}/patients:
     get:
-      description: Get all patients in a study. **(🚫 Not Implemented Yet)**
+      description: Get all patients in a study. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sizeParam'
@@ -116,7 +116,7 @@ paths:
             
   /studies/{studyId}/patients/{patientId}:
     get:
-      description: Get a patient in a study. **(🚫 Not Implemented Yet)**
+      description: Get a patient in a study. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/studyIdPathParam'
       - $ref: '#/parameters/patientIdPathParam'
@@ -126,7 +126,7 @@ paths:
             
   /patients/fetch:
     post:
-      description: Fetch patients by list of study ID and patient ID couples. **(🚫 Not Implemented Yet)**
+      description: Fetch patients by list of study ID and patient ID couples. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/patientIdentifiersBodyParam'
@@ -136,7 +136,7 @@ paths:
             
   /patients/query:
     post:
-      description: Query patients by example. **(🚫 Not Implemented Yet)**
+      description: Query patients by example. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sizeParam'
@@ -148,7 +148,7 @@ paths:
           
   /studies/{studyId}/patients/{patientId}/samples:
     get:
-      description: Get all samples of a patient in a study. **(🚫 Not Implemented Yet)**
+      description: Get all samples of a patient in a study. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sizeParam'
@@ -161,7 +161,7 @@ paths:
           
   /studies/{studyId}/samples/{sampleId}:
     get:
-      description: Get a sample in a study. **(🚫 Not Implemented Yet)**
+      description: Get a sample in a study. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/studyIdPathParam'
       - $ref: '#/parameters/sampleIdPathParam'
@@ -171,7 +171,7 @@ paths:
           
   /samples/fetch:
     post:
-      description: Fetch samples by list of study ID and sample ID couples. **(🚫 Not Implemented Yet)**
+      description: Fetch samples by list of study ID and sample ID couples. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sampleIdentifiersBodyParam'
@@ -181,7 +181,7 @@ paths:
             
   /samples/query:
     post:
-      description: Query samples by example. **(🚫 Not Implemented Yet)**
+      description: Query samples by example. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sizeParam'
