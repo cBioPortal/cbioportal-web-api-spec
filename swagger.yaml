@@ -38,28 +38,26 @@ paths:
         200:
           $ref: '#/responses/cancerTypeResponse'
           
-  /cancertypes/fetch:
-    post:
-      description: Fetch cancer types by list of IDs. **(Not Implemented Yet)**
-      parameters:
-      - $ref: '#/parameters/projectionParam'
-      - $ref: '#/parameters/cancerTypeIdsBodyParam'
-      responses:
-        200:
-          $ref: '#/responses/cancerTypesResponse'
-  
-  /cancertypes/query:
-    post:
-      description: Query cancer types by example. **(Not Implemented Yet)**
+  /clinicalattrs:
+    get:
+      description: Get all clinical attribute types in the system. **(Not Implemented Yet)**
       parameters:
       - $ref: '#/parameters/projectionParam'
       - $ref: '#/parameters/sizeParam'
       - $ref: '#/parameters/pageParam'
-      - $ref: '#/parameters/cancerTypeBodyParam'
       responses:
         200:
-          $ref: '#/responses/cancerTypesResponse'
-
+          $ref: '#/responses/clinicalAttributesResponse'
+  
+  /clinicalattrs/{clinicalAttributeId}:
+    get:
+      description: Get a clinical attribute type in the system. **(Not Implemented Yet)**
+      parameters:
+      - $ref: '#/parameters/clinicalAttributeIdPathParam'
+      responses:
+        200:
+          $ref: '#/responses/clinicalAttributeResponse'
+          
   /studies:
     get:
       description: Get all studies. **(Not Implemented Yet)**
@@ -79,28 +77,6 @@ paths:
       responses:
         200:
           $ref: '#/responses/studyResponse'
-  
-  /studies/fetch:
-    post:
-      description: Fetch studies by list of IDs. **(Not Implemented Yet)**
-      parameters:
-      - $ref: '#/parameters/projectionParam'
-      - $ref: '#/parameters/studyIdsBodyParam'
-      responses:
-        200:
-          $ref: '#/responses/studiesResponse'
-            
-  /studies/query:
-    post:
-      description: Query studies by example. **(Not Implemented Yet)**
-      parameters:
-      - $ref: '#/parameters/projectionParam'
-      - $ref: '#/parameters/sizeParam'
-      - $ref: '#/parameters/pageParam'
-      - $ref: '#/parameters/studyBodyParam'
-      responses:
-        200:
-          $ref: '#/responses/studiesResponse'
     
   /studies/{studyId}/patients:
     get:
@@ -199,17 +175,22 @@ parameters:
     description: |
       An optional parameter to specify the type of projection of the response.
       
-      - ID **_Returns only id field(s) of the objects_**
+      - ID **_Returns only id field(s) of the objects._**
       
-      - SUMMARY **_Returns only primitive types in the objects. No nested properties or collections_**
+      - SUMMARY **_Returns only primitive types in the objects. No nested properties or collections.
+      This is the default projection._**
       
-      - ALL **_Returns all properties including nested properties and collections_**
+      - ALL **_Returns all properties including nested properties and collections._**
+      
+      - META **_Returns an empty list in response body and metada about the result collection(count etc.) 
+      in response headers. Different metadata headers may be present for different resources._**
     required: false
     type: string
     enum:
     - ID
     - SUMMARY
     - ALL
+    - META
     default: SUMMARY
     
   pageParam:
@@ -221,16 +202,19 @@ parameters:
     required: false
     type: integer
     default: 0
+    minimum: 0
     
   sizeParam:
     name: size
     in: query
     description: |
-      An optional parameter to specify the page size of the paginated result.
-      **_0_** can be used if only the metadata in the response headers is wanted.
+      An optional parameter to specify the page size of the paginated result. 
+      **_1000_** is the max size. **_1_** is the min size.
     required: false
     type: integer
-    default: 100
+    default: 1000
+    maximum: 1000
+    minimum: 1
 
   cancerTypeIdPathParam:
     name: cancerTypeId
@@ -238,27 +222,13 @@ parameters:
     description: ID of the cancer type.
     required: true
     type: string
-
-  cancerTypeIdsBodyParam:
-    name: cancerTypeIds
-    in: body
-    description: List of IDs of cancer types.
+    
+  clinicalAttributeIdPathParam:
+    name: clinicalAttributeId
+    in: path
+    description: ID of the clinical attribute.
     required: true
-    schema:
-      type: array
-      items:
-        type: string
-      example:
-      - unec
-      - nmzl
-  
-  cancerTypeBodyParam:
-    name: cancerType
-    in: body
-    description: Example cancer type to be used in query.
-    required: true
-    schema:
-      $ref: '#/definitions/CancerType'
+    type: string
 
   studyIdPathParam:
     name: studyId
@@ -266,27 +236,6 @@ parameters:
     description: ID of the study.
     required: true
     type: string
-    
-  studyIdsBodyParam:
-    name: studyIds
-    in: body
-    description: List of IDs of studies.
-    required: true
-    schema:
-      type: array
-      items:
-        type: string
-      example:
-      - blca_tcga
-      - brca_tcga
-  
-  studyBodyParam:
-    name: study
-    in: body
-    description: Example study to be used in query.
-    required: true
-    schema:
-      $ref: '#/definitions/Study'
         
   patientIdPathParam:
     name: patientId
@@ -347,6 +296,21 @@ responses:
       $ref: '#/definitions/CancerTypes'
     headers:
       X-Total-Count:
+        description: Returned only if projection type is META.
+        type: integer
+        
+  clinicalAttributeResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/ClinicalAttribute'
+      
+  clinicalAttributesResponse:
+    description: OK
+    schema:
+      $ref: '#/definitions/ClinicalAttributes'
+    headers:
+      X-Total-Count:
+        description: Returned only if projection type is META.
         type: integer
       
   studyResponse:
@@ -360,6 +324,7 @@ responses:
       $ref: '#/definitions/Studies'
     headers:
       X-Total-Count:
+        description: Returned only if projection type is META.
         type: integer
       
   patientResponse:
@@ -373,6 +338,7 @@ responses:
       $ref: '#/definitions/Patients'
     headers:
       X-Total-Count:
+        description: Returned only if projection type is META.
         type: integer
         
   sampleResponse:
@@ -386,6 +352,7 @@ responses:
       $ref: '#/definitions/Samples'
     headers:
       X-Total-Count:
+        description: Returned only if projection type is META.
         type: integer
     
 definitions:
@@ -508,20 +475,24 @@ definitions:
         type: string
       study:
         $ref: '#/definitions/Study'
-      clinicalAttributes:
-        $ref: '#/definitions/ClinicalAttributes'
+      clinicalData:
+        $ref: '#/definitions/ClinicalData'
     example:
       id: TCGA-PK-A5HC
-      clinicalAttributes:
+      clinicalData:
       - id: PROSPECTIVE_COLLECTION
         name: Tissue Prospective Collection Indicator
         description: Text indicator for the time frame of tissue procurement, indicating that the tissue was procured in parallel to the project.
         priority: 1
+        dataType: STRING
+        patientAttribute: true
         value: YES
       - id: RETROSPECTIVE_COLLECTION
         name: Tissue Retrospective Collection Indicator
         description: Text indicator for the time frame of tissue procurement, indicating that the tissue was obtained and stored prior to the initiation of the project.
         priority: 1
+        dataType: STRING
+        patientAttribute: true
         value: NO
  
   Patients:
@@ -530,45 +501,47 @@ definitions:
       $ref: '#/definitions/Patient'
     example:
     - id: TCGA-PK-A5HC
-      clinicalAttributes:
+      clinicalData:
       - id: PROSPECTIVE_COLLECTION
         name: Tissue Prospective Collection Indicator
         description: Text indicator for the time frame of tissue procurement, indicating that the tissue was procured in parallel to the project.
         priority: 1
+        dataType: STRING
+        patientAttribute: true
         value: YES
       - id: RETROSPECTIVE_COLLECTION
         name: Tissue Retrospective Collection Indicator
         description: Text indicator for the time frame of tissue procurement, indicating that the tissue was obtained and stored prior to the initiation of the project.
         priority: 1
+        dataType: STRING
+        patientAttribute: true
         value: NO
     - id: TCGA-ZF-AA5P
-      clinicalAttributes:
+      clinicalData:
       - id: GENDER
         name: Person Gender
         description: Patient gender.
         priority: 1
+        dataType: STRING
+        patientAttribute: true
         value: FEMALE
       - id: RACE
         name: Race Category
         description: The text for reporting information about race.
         priority: 1
+        dataType: STRING
+        patientAttribute: true
         value: ASIAN
   
-  PatientIdentifier:
-    type: object
-    properties:
-      id:
-        type: string
-      studyId:
-        type: string
-    example:
-      id: TCGA-OR-A5J1
-      studyId: acc_tcga
-   
   PatientIdentifiers:
     type: array
     items:
-      $ref: '#/definitions/PatientIdentifier'
+      type: object
+      properties:
+        id:
+          type: string
+        studyId:
+          type: string
     example:
     - id: TCGA-PK-A5HC
       studyId: acc_tcga
@@ -586,14 +559,20 @@ definitions:
         type: string
       priority:
         type: integer
-      value:
+      dataType:
         type: string
+        enum:
+        - STRING
+        - NUMBER
+      patientAttribute:
+        type: boolean
     example:
       id: PATIENT_ID
       name: Patient Identifier
       description: Identifier to uniquely specify a patient.
       priority: 1
-      value: 12345
+      dataType: STRING
+      patientAttribute: true
       
   ClinicalAttributes:
     type: array
@@ -604,11 +583,38 @@ definitions:
       name: Other Patient ID
       description: Legacy DMP patient identifier (DMPnnnn)
       priority: 1
+      dataType: STRING
+      patientAttribute: true
+    - id: FORM_COMPLETION_DATE
+      name: Form completion date
+      description: Form completion date
+      priority: 1
+      dataType: STRING
+      patientAttribute: true
+      
+  ClinicalData:
+    type: array
+    items:
+      allOf:
+      - $ref: '#/definitions/ClinicalAttribute'
+      - type: object
+        properties:
+          value:
+            type: string
+    example:
+    - id: OTHER_PATIENT_ID
+      name: Other Patient ID
+      description: Legacy DMP patient identifier (DMPnnnn)
+      priority: 1
+      dataType: STRING
+      patientAttribute: true
       value: 54321
     - id: FORM_COMPLETION_DATE
       name: Form completion date
       description: Form completion date
       priority: 1
+      dataType: STRING
+      patientAttribute: true
       value: 2015-12-21 09:32:09
       
   Sample:
@@ -628,24 +634,28 @@ definitions:
         - Solid Tissues Normal
       cancerTypeId:
         type: string
-      clinicalAttributes:
-        $ref: '#/definitions/ClinicalAttributes'
+      clinicalData:
+        $ref: '#/definitions/ClinicalData'
       patient:
         $ref: '#/definitions/Patient'
     example:
       id: TCGA-PK-A5HC-01
       type: Primary Solid Tumor
       cancerTypeId: acc
-      clinicalAttributes:
+      clinicalData:
       - id: OTHER_SAMPLE_ID
         name: Other Sample ID
         description: Legacy DMP sample identifier (DMPnnnn)
         priority: 1
+        dataType: STRING
+        patientAttribute: false
         value: 5C631CE8-F96A-4C35-A459-556FC4AB21E1
       - id: DAYS_TO_COLLECTION
         name: Days to Sample Collection.
         description: Days to sample collection.
         priority: 1
+        dataType: STRING
+        patientAttribute: false
         value: 276
    
   Samples:
@@ -656,47 +666,49 @@ definitions:
     - id: TCGA-P6-A5OH-01
       type: Recurrent Solid Tumor
       cancerTypeId: acc
-      clinicalAttributes:
+      clinicalData:
       - id: OTHER_SAMPLE_ID
         name: Other Sample ID
         description: Legacy DMP sample identifier (DMPnnnn)
         priority: 1
+        dataType: STRING
+        patientAttribute: false
         value: 5C631CE8-F96A-4C35-A459-556FC4AB21E1
       - id: DAYS_TO_COLLECTION
         name: Days to Sample Collection.
         description: Days to sample collection.
         priority: 1
+        dataType: STRING
+        patientAttribute: false
         value: 276
     - id: TCGA-OR-A5LI-01
       type: Primary Solid Tumor
       cancerTypeId: blca
-      clinicalAttributes:
+      clinicalData:
       - id: IS_FFPE
         name: Is FFPE
         description: If the sample is from FFPE
         priority: 1
+        dataType: STRING
+        patientAttribute: false
         value: NO
       - id: OCT_EMBEDDED
         name: Oct embedded
         description: Oct embedded
         priority: 1
+        dataType: STRING
+        patientAttribute: false
         value: false
         
-  SampleIdentifier:
-    type: object
-    properties:
-      id:
-        type: string
-      studyId:
-        type: string
-    example:
-      id: TCGA-PK-A5HC-01
-      studyId: acc_tcga
-   
   SampleIdentifiers:
     type: array
     items:
-      $ref: '#/definitions/SampleIdentifier'
+      type: object
+      properties:
+        id:
+          type: string
+        studyId:
+          type: string
     example:
     - id: TCGA-P6-A5OH-01
       studyId: acc_tcga
